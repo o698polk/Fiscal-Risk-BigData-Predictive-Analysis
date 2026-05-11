@@ -135,25 +135,25 @@ MC_N_SIMULATIONS: int = 50_000
 # Calibración: Vernaza Quiñonez, Sección 4.6.
 # Ecuador enfrenta declive natural acelerado (campos maduros ITT/Sacha),
 # precios volátiles post-OPEC+, y crecimiento estructuralmente bajo.
-MC_DELTA_MEAN: float = 0.048    # Tasa de declive petrolero media (4.8%/año)
-MC_DELTA_STD: float = 0.018     # Desviación estándar del declive
-MC_PRICE_MEAN: float = 52.0     # Precio crudo medio (USD/bbl) — Oriente discount
-MC_PRICE_STD: float = 20.0      # Desviación estándar precio (alta volatilidad)
-MC_GROWTH_MEAN: float = 0.8     # Crecimiento PIB medio (%) — estancamiento secular
-MC_GROWTH_STD: float = 2.5      # Desviación estándar crecimiento
+MC_DELTA_MEAN: float = 0.040    # Tasa de declive petrolero media (4.0%/año)
+MC_DELTA_STD: float = 0.015     # Desviación estándar del declive
+MC_PRICE_MEAN: float = 57.5     # Precio crudo medio (USD/bbl) -- Oriente discount
+MC_PRICE_STD: float = 17.0      # Desviación estándar precio
+MC_GROWTH_MEAN: float = 1.3     # Crecimiento PIB medio (%)
+MC_GROWTH_STD: float = 1.8      # Desviación estándar crecimiento
 
 # Umbrales de colapso fiscal (cada indicador binario vale 1 punto)
 # Calibración: Vernaza Quiñonez, Tabla 10 — Umbrales de sostenibilidad.
 # Adaptados a la realidad fiscal ecuatoriana (economía dolarizada sin
 # política monetaria autónoma, lo que reduce los márgenes de maniobra).
 COLLAPSE_THRESHOLDS: Dict[str, float] = {
-    "deuda_pib_max": 57.0,           # Deuda/PIB > 57% (umbral COPLAFIP)
-    "ratio_rp_min": 7.0,             # Ratio R/P < 7 años (agotamiento)
-    "deficit_max": 4.5,              # Déficit > 4.5% PIB (regla fiscal)
-    "produccion_min": 400.0,         # Producción < 400 Kb/d (umbral fiscal)
-    "irfc_max": 60.0,                # IRFC > 60 (riesgo elevado)
-    "empleo_min": 35.0,              # Empleo adecuado < 35% PEA
-    "reservas_min": 800.0,           # Reservas < 800 Mb (horizonte corto)
+    "deuda_pib_max": 71.5,           # Deuda/PIB > 71.5% (umbral critico)
+    "ratio_rp_min": 5.5,             # Ratio R/P < 5.5 años (agotamiento)
+    "deficit_max": 6.2,              # Déficit > 6.2% PIB (regla fiscal)
+    "produccion_min": 355.0,         # Producción < 355 Kb/d (umbral fiscal)
+    "irfc_max": 66.5,                # IRFC > 66.5 (riesgo elevado)
+    "empleo_min": 33.5,              # Empleo adecuado < 33.5% PEA
+    "reservas_min": 625.0,           # Reservas < 625 Mb
 }
 COLLAPSE_SCORE_THRESHOLD: int = 5   # Score >= 5 = Colapso Fiscal
 

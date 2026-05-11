@@ -195,7 +195,7 @@ class MonteCarloEngine:
                 # Ecuador emite deuda a tasas altas (7-10%) por su
                 # calificación crediticia (B-/CCC+). Sin política monetaria,
                 # la dolarización impide monetizar el déficit.
-                r_implicit = 0.072 + np.random.normal(0, 0.01)
+                r_implicit = 0.058 + np.random.normal(0, 0.008)
                 d_t = d_t * (1 + r_implicit) / (1 + growth_year / 100.0)
                 # El déficit se financia con nueva deuda
                 d_t += def_t * (0.8 + 0.2 * np.random.rand())
@@ -204,7 +204,7 @@ class MonteCarloEngine:
                 # Déficit: tendencia creciente por rigidez del gasto
                 # Los subsidios (combustibles ~$3B/año) y la masa salarial
                 # pública son políticamente inelásticos.
-                def_t = def_t + 0.35 + np.random.normal(0, 0.6)
+                def_t = def_t + 0.12 + np.random.normal(0, 0.4)
                 def_t = max(def_t, 0.5)
 
                 # Reservas: agotamiento acumulativo por producción
@@ -214,7 +214,7 @@ class MonteCarloEngine:
                 # Empleo: deterioro estructural vinculado a petróleo
                 # La caída de ingresos fiscales reduce inversión pública
                 # y contracción del sector formal.
-                emp_t = emp_t - 0.3 + growth_year * 0.8 + np.random.normal(0, 1.5)
+                emp_t = emp_t - 0.15 + growth_year * 0.6 + np.random.normal(0, 1.3)
                 emp_t = np.clip(emp_t, 15.0, 65.0)
 
                 # Ratio R/P: indicador de horizonte de agotamiento
