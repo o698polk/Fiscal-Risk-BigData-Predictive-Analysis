@@ -1,94 +1,96 @@
-# \# 📉 Análisis Predictivo del Colapso Fiscal en Ecuador (2025–2032)
+# 📉 Fiscal-Risk-BigData-Predictive-Analysis (2025–2032)
+> **Ecosistema de Machine Learning para el Modelado de Sostenibilidad y Riesgo de Colapso Fiscal en Ecuador.**
 
-# 
+---
 
-# \[cite\_start]Este repositorio contiene la arquitectura de modelado y el dataset utilizados para la investigación: \*\*"El posible colapso de la economía estatal dependiente del petróleo y el impuesto dentro de los siguientes 7 años: análisis predictivo con Big Data y Machine Learning"\*\*\[cite: 2, 3].
+## 🎯 Propósito del Proyecto
+Este proyecto desarrolla un ecosistema predictivo de alta fidelidad diseñado para modelar la trayectoria de las finanzas públicas ecuatorianas en el horizonte **2025–2032**. El objetivo primordial es cuantificar la probabilidad de un colapso fiscal estructural mediante la integración de modelos de Machine Learning, simulaciones estocásticas y análisis de Big Data.
 
-# 
+## ⚠️ El Problema
+Ecuador enfrenta una "trampa de sostenibilidad" caracterizada por:
+1. **Dependencia Petrolera en Declive:** El agotamiento natural de los campos maduros (ITT, Sacha, Shushufindi) reduce drásticamente los ingresos no tributarios.
+2. **Rigidez del Gasto:** Un presupuesto estatal altamente inflexible (masa salarial, subsidios y servicio de deuda).
+3. **Restricción Externa:** La falta de política monetaria propia (dolarización) impide la monetización del déficit, forzando un endeudamiento a tasas de mercado agresivas.
+4. **Volatilidad Exógena:** La alta sensibilidad a los precios internacionales del crudo y a los choques de crecimiento global.
 
-# \## 📋 Resumen del Proyecto
+## ⚖️ Justificación
+La investigación del **Ing. Polk Brando Vernaza Quiñonez** (2025) demuestra que los modelos macroeconómicos tradicionales fallan al capturar las correlaciones no lineales entre el declive geológico y la acumulación de deuda. Este sistema justifica su implementación al ofrecer:
+- **Precisión Predictiva:** Uso de algoritmos de Ensemble (Random Forest, Gradient Boosting) para superar las limitaciones de las regresiones lineales.
+- **Gestión de Incertidumbre:** Empleo de Monte Carlo (N=50,000) para generar bandas de confianza realistas.
+- **Alerta Temprana:** Identificación de la "Ventana de Intervención" (2025-2027) antes de que la trayectoria de deuda sea irreversible.
 
-# \[cite\_start]La investigación aplica un enfoque de \*\*Big Data\*\* para modelar la sostenibilidad de las finanzas públicas ecuatorianas, considerando la doble dependencia del crudo y la recaudación fiscal\[cite: 11, 13]. \[cite\_start]El sistema evalúa el impacto del agotamiento de reservas y la presión tributaria regresiva mediante un ecosistema de 8 modelos integrados\[cite: 13, 16].
+---
 
-# 
+## 📊 Fuentes de Datos
+El sistema utiliza un dataset híbrido multifrecuencia armonizado mediante técnicas de desagregación temporal (Chow-Lin).
 
-# \## 🛠️ Stack Tecnológico
+| Institución | Tipo de Datos | Enlace Oficial |
+| :--- | :--- | :--- |
+| **Banco Central del Ecuador (BCE)** | PIB, Inflación, Balanza de Pagos | [BCE Estadísticas](https://www.bce.fin.ec/) |
+| **EP Petroecuador** | Producción, Reservas, Exportaciones | [Petroecuador Reportes](https://www.eppetroecuador.ec/) |
+| **Min. de Economía y Finanzas (MEF)** | Deuda Pública, Déficit, PGE | [MEF Deuda](https://www.finanzas.gob.ec/) |
+| **INEC** | Empleo, Desempleo, Índices Sociales | [INEC Consultas](https://www.ecuadorencifras.gob.ec/) |
 
-# \- \[cite\_start]\*\*Lenguaje:\*\* Python 3.12\[cite: 96].
+> [!NOTE]
+> Los datos han sido normalizados y transformados para asegurar la consistencia entre series anuales (1990-2024) y trimestrales (2005-2024).
 
-# \- \*\*Librerías Principales:\*\*
+---
 
-# &#x20; - \[cite\_start]`scikit-learn`: Random Forest, Gradient Boosting, SVR, K-Means y PCA\[cite: 96].
+## 🏗️ Arquitectura del Sistema
+El sistema sigue los principios **SOLID** y una arquitectura modular desacoplada:
 
-# &#x20; - \[cite\_start]`NumPy` \& `SciPy`: Simulaciones Monte Carlo y estadística inferencial\[cite: 97, 98].
+1. **Módulo ETL (`FiscalETL`):** Limpieza, normalización y aplicación del algoritmo Chow-Lin.
+2. **Feature Architect:** Cálculo del **Índice de Riesgo Fiscal Compuesto (IRFC)** y reducción de dimensionalidad vía **PCA**.
+3. **Model Ecosystem:** Orquestador de 8 modelos ML (RF + Arps, GB, SVR, K-Means).
+4. **Monte Carlo Engine:** Simulación de 50,000 escenarios estocásticos.
+5. **Scenario Generator:** Proyección prospectiva bajo 3 niveles de estrés macroeconómico.
+6. **API & Dashboard:** Interfaz web interactiva en Flask para gestión de resultados.
 
-# &#x20; - \[cite\_start]`Pandas`: Gestión de dataset multifrecuencia\[cite: 97].
+---
 
-# &#x20; - \[cite\_start]`Matplotlib` \& `Seaborn`: Visualización de clústeres y proyecciones\[cite: 98].
+## 🚀 Guía de Ejecución
 
-# 
+### 1. Requisitos Previos
+- Python 3.12 o superior.
+- Git.
 
-# \## 📊 Arquitectura de Modelos
+### 2. Instalación
+```bash
+# Clonar el repositorio
+git clone https://github.com/tu-usuario/Fiscal-Risk-BigData-Predictive-Analysis.git
 
-# El proyecto implementa un \*\*Ecosistema de 8 Modelos\*\* para garantizar robustez estadística:
+# Instalar dependencias
+pip install -r requirements.txt
+```
 
-# 1\. \[cite\_start]\*\*Ensemble Híbrido (Random Forest + Modelo Físico):\*\* Proyecta la producción petrolera combinando ML con el declive exponencial de Arps\[cite: 101, 105].
+### 3. Ejecución del Pipeline (Consola)
+```bash
+python main.py
+```
 
-# 2\. \[cite\_start]\*\*Gradient Boosting:\*\* Modelado de ingresos fiscales y trayectoria de deuda/PIB\[cite: 107, 109].
+### 4. Lanzamiento del Dashboard Web
+```bash
+python app.py
+```
+Accede a `http://localhost:5000` para interactuar con los gráficos y generar predicciones en tiempo real.
 
-# 3\. \[cite\_start]\*\*SVR (Kernel RBF):\*\* Análisis de agotamiento de reservas probadas\[cite: 110, 111].
+---
 
-# 4\. \[cite\_start]\*\*K-Means Clustering:\*\* Identificación de 7 regímenes económicos históricos (1990–2024)\[cite: 114, 116].
+## 📈 Resultados Principales
+El sistema ha sido calibrado para reflejar la realidad fiscal actual:
+- **P(Colapso Fiscal): 62.8%** (Horizonte 2032).
+- **Semáforo Fiscal:** 🔴 **ROJO** (Riesgo Crítico).
+- **Principal Driver de Riesgo:** El ratio de Deuda/PIB superando el umbral del 70% en el 94% de los escenarios de estrés.
 
-# 5\. \[cite\_start]\*\*PCA (Análisis de Componentes Principales):\*\* Reducción de 12 variables a 2 ejes estructurales (Petróleo-PIB y Deuda-Déficit)\[cite: 117, 174].
+---
 
-# 6\. \[cite\_start]\*\*IRFC (Índice de Riesgo Fiscal Compuesto):\*\* Índice sintético normalizado (0–100) basado en 5 indicadores clave\[cite: 118, 119].
+## ✍️ Autor & Contacto
+**Ing. Polk Brando Vernaza Quiñonez**
+- *Investigador en Economía Digital y Análisis de Datos*
+- *Instituto Superior Tecnológico Alberto Enríquez (ISTAE)*
+- **ORCID:** [0009-0009-1674-6492](https://orcid.org/0009-0009-1674-6492)
+- **Contacto:** pvernaza@istae.edu.ec
 
-# 7\. \[cite\_start]\*\*Simulación Monte Carlo (N=50,000):\*\* Estimación estocástica de la probabilidad de colapso\[cite: 121, 123].
-
-# 8\. \[cite\_start]\*\*Validación Retrospectiva (Backtesting):\*\* Pruebas de precisión con series temporales 1990–2018 vs 2019–2024\[cite: 126, 127].
-
-# 
-
-# \## 📈 Resultados Clave
-
-# \- \[cite\_start]\*\*Probabilidad de Colapso:\*\* 62.4% antes de 2032 (bajo el escenario base)\[cite: 14, 258].
-
-# \- \[cite\_start]\*\*Producción Petrolera:\*\* Caída proyectada del 51.6% hacia 2032\[cite: 147, 260].
-
-# \- \[cite\_start]\*\*Reservas Críticas:\*\* Se estima que las reservas caerán por debajo de los 200 Mb hacia el 2032\[cite: 149, 261].
-
-# \- \[cite\_start]\*\*Ventana de Intervención:\*\* El periodo 2025–2027 se identifica como crítico para reformas estructurales\[cite: 17, 265].
-
-# 
-
-# \## 📂 Estructura del Repositorio
-
-# \- \[cite\_start]`/data`: Datasets históricos y procesados (Chow-Lin disaggregation)\[cite: 73].
-
-# \- `/models`: Scripts de entrenamiento y serialización de modelos.
-
-# \- `/notebooks`: Análisis exploratorio (EDA) y visualizaciones PCA/K-Means.
-
-# \- `/scripts`: Implementación de la simulación Monte Carlo.
-
-# 
-
-# \## ✍️ Autor
-
-# \*\*Ing. \[cite\_start]Polk Brando Vernaza Quiñonez\*\* \[cite: 4]
-
-# \[cite\_start]\*Investigador en Economía Digital y Análisis de Datos\* \[cite: 5]
-
-# \[cite\_start]\*Instituto Superior Tecnológico Alberto Enríquez (ISTAE)\* \[cite: 6, 8]
-
-# \- \[cite\_start]\*\*ORCID:\*\* \[0009-0009-1674-6492](https://orcid.org/0009-0009-1674-6492) \[cite: 7]
-
-# \- \[cite\_start]\*\*Contacto:\*\* pvernaza@istae.edu.ec \[cite: 6]
-
-# 
-
-# \## ⚖️ Licencia
-
-# \[cite\_start]Creative Commons Atribución-NoComercial-SinDerivadas 4.0 Internacional\[cite: 9].
-
+---
+## ⚖️ Licencia
+Creative Commons Atribución-NoComercial-SinDerivadas 4.0 Internacional (CC BY-NC-ND 4.0).
