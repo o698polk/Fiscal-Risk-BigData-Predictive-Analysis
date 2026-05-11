@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Sistema de análisis predictivo de riesgo fiscal para Ecuador 2025-2032 con Machine Learning y simulación Monte Carlo.">
+    <title>Fiscal Risk — Análisis Predictivo de Colapso Fiscal Ecuador 2025–2032</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+    <!-- ===== HEADER ===== -->
+    <header class="header" id="header">
+        <div class="header__container">
+            <div class="header__brand">
+                <div class="header__icon">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+                        <path d="M2 17l10 5 10-5"/>
+                        <path d="M2 12l10 5 10-5"/>
+                    </svg>
+                </div>
+                <div>
+                    <h1 class="header__title">Fiscal Risk Analytics</h1>
+                    <p class="header__subtitle">Análisis Predictivo — Ecuador 2025–2032</p>
+                </div>
+            </div>
+            <div class="header__status" id="headerStatus">
+                <span class="status-dot status-dot--idle"></span>
+                <span>Sistema listo</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- ===== MAIN CONTENT ===== -->
+    <main class="main">
+
+        <!-- PIPELINE CONTROL PANEL -->
+        <section class="panel panel--controls" id="controlPanel">
+            <div class="panel__header">
+                <h2 class="panel__title">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                    Panel de Control — Pipeline de Análisis
+                </h2>
+                <p class="panel__description">Ejecute cada etapa secuencialmente o el pipeline completo con un solo clic.</p>
+            </div>
+
+            <div class="controls-grid">
+                <!-- Run All Button -->
+                <button class="btn btn--primary btn--xl" id="btnRunAll" onclick="runAll()">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21"/></svg>
+                    Ejecutar Pipeline Completo
+                </button>
+
+                <div class="controls-steps">
+                    <button class="btn btn--step" id="btnETL" onclick="runStep('etl')">
+                        <span class="step-num">1</span>
+                        <span class="step-label">ETL<br><small>Extracción y Limpieza</small></span>
+                        <span class="step-status" id="statusETL">●</span>
+                    </button>
+                    <div class="step-arrow">→</div>
+                    <button class="btn btn--step" id="btnFeatures" onclick="runStep('features')">
+                        <span class="step-num">2</span>
+                        <span class="step-label">Features<br><small>IRFC + PCA</small></span>
+                        <span class="step-status" id="statusFeatures">●</span>
+                    </button>
+                    <div class="step-arrow">→</div>
+                    <button class="btn btn--step" id="btnTraining" onclick="runStep('training')">
+                        <span class="step-num">3</span>
+                        <span class="step-label">Modelos<br><small>Ecosistema ML</small></span>
+                        <span class="step-status" id="statusTraining">●</span>
+                    </button>
+                    <div class="step-arrow">→</div>
+                    <button class="btn btn--step" id="btnBacktest" onclick="runStep('backtest')">
+                        <span class="step-num">4</span>
+                        <span class="step-label">Backtesting<br><small>Validación</small></span>
+                        <span class="step-status" id="statusBacktesting">●</span>
+                    </button>
+                    <div class="step-arrow">→</div>
+                    <button class="btn btn--step" id="btnMonteCarlo" onclick="runStep('montecarlo')">
+                        <span class="step-num">5</span>
+                        <span class="step-label">Monte Carlo<br><small>N=50,000</small></span>
+                        <span class="step-status" id="statusMontecarlo">●</span>
+                    </button>
+                    <div class="step-arrow">→</div>
+                    <button class="btn btn--step" id="btnScenarios" onclick="runStep('scenarios')">
+                        <span class="step-num">6</span>
+                        <span class="step-label">Escenarios<br><small>2025–2032</small></span>
+                        <span class="step-status" id="statusScenarios">●</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- PROGRESS / LOG AREA -->
+        <section class="panel panel--log" id="logPanel" style="display:none;">
+            <div class="panel__header">
+                <h2 class="panel__title">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>
+                    Registro de Ejecución
+                </h2>
+            </div>
+            <div class="log-container" id="logContainer">
+                <div class="log-entry log-entry--info">Sistema iniciado. Listo para ejecutar.</div>
+            </div>
+        </section>
+
+        <!-- RESULTS: KPI CARDS -->
+        <section class="panel panel--kpis" id="kpiPanel" style="display:none;">
+            <div class="panel__header">
+                <h2 class="panel__title">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 20V10"/><path d="M12 20V4"/><path d="M6 20v-6"/></svg>
+                    Resultados Clave
+                </h2>
+            </div>
+            <div class="kpi-grid" id="kpiGrid">
+                <!-- KPI cards inserted by JS -->
+            </div>
+        </section>
+
+        <!-- RESULTS: METRICS TABLE -->
+        <section class="panel panel--metrics" id="metricsPanel" style="display:none;">
+            <div class="panel__header">
+                <h2 class="panel__title">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
+                    Métricas de Modelos
+                </h2>
+            </div>
+            <div class="table-wrapper" id="metricsTableContainer">
+                <!-- Table inserted by JS -->
+            </div>
+        </section>
+
+        <!-- RESULTS: SCENARIOS TABLE -->
+        <section class="panel panel--scenarios" id="scenarioPanel" style="display:none;">
+            <div class="panel__header">
+                <h2 class="panel__title">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/></svg>
+                    Comparación de Escenarios — 2032
+                </h2>
+            </div>
+            <div class="table-wrapper" id="scenarioTableContainer">
+                <!-- Table inserted by JS -->
+            </div>
+        </section>
+
+        <!-- RESULTS: PLOTS GALLERY -->
+        <section class="panel panel--plots" id="plotsPanel" style="display:none;">
+            <div class="panel__header">
+                <h2 class="panel__title">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+                    Gráficos de Análisis
+                </h2>
+                <button class="btn btn--outline btn--sm" onclick="downloadAllPlots()" id="btnDownloadAll" style="display:none;">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                    Descargar Todos (PNG)
+                </button>
+            </div>
+            <div class="plots-grid" id="plotsGrid">
+                <!-- Plot images inserted by JS -->
+            </div>
+        </section>
+
+        <!-- TRAFFIC LIGHT -->
+        <section class="panel panel--traffic" id="trafficPanel" style="display:none;">
+            <div class="panel__header">
+                <h2 class="panel__title">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="M12 8v4"/><path d="M12 16h.01"/></svg>
+                    Semáforo Fiscal
+                </h2>
+            </div>
+            <div class="traffic-light-container" id="trafficLightContainer">
+                <!-- Traffic light inserted by JS -->
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="footer">
+        <div class="footer__container">
+            <p>Fiscal-Risk-BigData-Predictive-Analysis &copy; 2025 — Ing. Polk Brando Vernaza Quiñonez</p>
+            <p class="footer__sub">Instituto Superior Tecnológico Alberto Enríquez (ISTAE)</p>
+        </div>
+    </footer>
+
+    <script src="/static/app.js"></script>
+</body>
+</html>
